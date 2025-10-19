@@ -382,6 +382,14 @@ function importFromJsonFile(event) {
   };
   reader.readAsText(file);
 }
+function showNotification(message) {
+  const note = document.getElementById('notification');
+  if (!note) return;
+  note.textContent = message;
+  note.style.opacity = 1;
+  setTimeout(() => (note.style.opacity = 0), 3000);
+}
+
 document.getElementById("exportBtn").addEventListener("click", exportToJsonFile);
 document.getElementById("importFile").addEventListener("change", importFromJsonFile);
 
