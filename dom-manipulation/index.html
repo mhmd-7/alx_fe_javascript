@@ -2,32 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dynamic Quote Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #quoteDisplay { padding: 15px; border: 1px solid #ddd; min-height: 60px; margin-bottom: 10px; }
+    #notification { transition: opacity 0.3s ease; opacity: 0; margin-top: 10px; }
+    form > input { margin-right: 6px; }
+    .controls { margin: 10px 0; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  </style>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <div id="controls">
-    <select id="categoryFilter" onchange="filterQuotes()">
-      <option value="all">All Categories</option>
-    </select>
+  <div class="controls">
+    <label for="categoryFilter">Category: </label>
+    <select id="categoryFilter"></select>
+
     <button id="newQuote">Show New Quote</button>
+
     <button id="exportBtn">Export JSON</button>
-    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+    <input type="file" id="importFile" accept=".json" />
   </div>
 
-  <div id="quoteDisplay"></div>
+  <div id="quoteDisplay" aria-live="polite"></div>
 
-  <div id="addQuoteSection">
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button onclick="addQuote()">Add Quote</button>
-  </div>
+  <h2>Add a Quote</h2>
+  <form id="addQuoteForm">
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote" required />
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" required />
+    <button type="submit">Add Quote</button>
+  </form>
 
-  <p id="notification"></p>
+  <div id="notification" role="status"></div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
