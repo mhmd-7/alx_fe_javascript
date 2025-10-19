@@ -347,4 +347,43 @@ if (typeof module !== 'undefined' && module.exports) {
     showRandomQuote
   };
 }
+// Export all quotes to a JSON file
+function exportToJsonFile() {
+  const dataStr = JSON.stringify(quotes, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "quotes.json";
+  link.click();
+
+  URL.revokeObjectURL(url);
+  console.log("Quotes exported successfully!");
+}
+
+// Handle importing quotes from a JSON file
+function importFromJsonFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const importedQuotes = JSON.parse(e.target.result);
+      if (Array.isArray(importedQuotes)) {
+        quotes.push(...importedQuotes);
+        localStorage.setItem("quotes", JSON.stringify(quotes));
+        console.log("Quotes imported successfully!");
+      }
+    } catch (err) {
+      console.error("Error importing quotes:", err);
+    }
+  };
+  reader.readAsText(file);
+}
+document.getElementById("exportBtn").addEventListener("click", exportToJsonFile);
+document.getElementById("importFile").addEventListener("change", importFromJsonFile);
+
+
 
